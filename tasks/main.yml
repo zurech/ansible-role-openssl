@@ -1,0 +1,45 @@
+---
+- name: Ensure openssl is installed
+  package:
+    name: openssl
+    state: "{{openssl_package_state}}"
+
+- name: Ensure openssl private key paths exists
+  file:
+    path: "{{ item['site_paths']['private_key']]|default(private_key_path) }}"
+    state: directory
+  with_items: "{{ sites_info }}"
+
+- name: Ensure openssl cert paths exists
+  file:
+    path: "{{ item['site_paths']['cert']]|default(cert_path) }}"
+    state: directory
+  with_items: "{{ sites_info }}"
+
+- name: Ensure openssl csr paths exists
+  file:
+    path: "{{ item['site_paths']['csr']]|default(csr_path) }}"
+    state: directory
+  with_items: "{{ sites_info }}"
+
+- name: Generate an OpenSSL private key with the default values (4096 bits, RSA)
+  openssl_privatekey:
+    path: "{{ item['site_paths']['private_key']|default(private_key_path) }}/{{ item['site_name'] }}.key"
+  with_items: "{{ sites_info }}"
+
+- name:
+  openssl_csr:
+    path: "{{ item['site_paths']['csr'] }}/{{ item['site_name'] }}.csr"
+    privatekey_path: "{{ item['site_paths']['private_key'] }}/{{ item['site_name'] }}.key"
+    common_name: "{{ item['site_name'] }}"
+    country_name: "{{ item['country_name']|default(country_name) }}"
+    organization_name: "{{ item['organization_name']|default(organization_name) }}"
+  with_items: "{{ sites_info }}"
+
+- name: Generate a Self Signed OpenSSL certificate
+  openssl_certificate:
+    path: "{{ item['site_paths']['cert'] }}/{{ item['site_name'] }}.crt"
+    privatekey_path: "{{ item['site_paths']['private_key'] }}/{{ item['site_name'] }}.key"
+    csr_path: "{{ item['site_paths']['csr'] }}/{{ item['site_name'] }}.csr"
+    provider: selfsigned
+  with_items: "{{ sites_info }}"

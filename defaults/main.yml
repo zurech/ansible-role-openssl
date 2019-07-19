@@ -1,0 +1,7 @@
+---
+
+organization_name: Ascentio
+country_name: AR
+private_key_path: "/etc/ssl/private"
+csr_path: "/etc/ssl/csr"
+cert_path: "/etc/ssl/certs"
