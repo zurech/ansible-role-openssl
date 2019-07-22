@@ -6,19 +6,19 @@
 
 - name: Ensure openssl private key paths exists
   file:
-    path: "{{ item['site_paths']['private_key']]|default(private_key_path) }}"
+    path: "{{ item['site_paths']['private_key']|default(private_key_path) }}"
     state: directory
   with_items: "{{ sites_info }}"
 
 - name: Ensure openssl cert paths exists
   file:
-    path: "{{ item['site_paths']['cert']]|default(cert_path) }}"
+    path: "{{ item['site_paths']['cert']|default(cert_path) }}"
     state: directory
   with_items: "{{ sites_info }}"
 
 - name: Ensure openssl csr paths exists
   file:
-    path: "{{ item['site_paths']['csr']]|default(csr_path) }}"
+    path: "{{ item['site_paths']['csr']|default(csr_path) }}"
     state: directory
   with_items: "{{ sites_info }}"
 
