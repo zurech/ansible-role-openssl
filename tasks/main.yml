@@ -2,7 +2,7 @@
 - name: Ensure openssl is installed
   package:
     name: openssl
-    state: "{{openssl_package_state}}"
+    state: "{{ openssl_package_state }}"
 
 - name: Ensure openssl private key paths exists
   file:
@@ -27,7 +27,7 @@
     path: "{{ item['site_paths']['private_key']|default(private_key_path) }}/{{ item['site_name'] }}.key"
   with_items: "{{ sites_info }}"
 
-- name:
+- name: Generate Certificate Signing Request
   openssl_csr:
     path: "{{ item['site_paths']['csr'] }}/{{ item['site_name'] }}.csr"
     privatekey_path: "{{ item['site_paths']['private_key'] }}/{{ item['site_name'] }}.key"
