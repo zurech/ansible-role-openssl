@@ -41,5 +41,6 @@
     path: "{{ item['site_paths']['cert'] }}/{{ item['site_name'] }}.crt"
     privatekey_path: "{{ item['site_paths']['private_key'] }}/{{ item['site_name'] }}.key"
     csr_path: "{{ item['site_paths']['csr'] }}/{{ item['site_name'] }}.csr"
+    selfsigned_not_after: "{{ item['expiration_date'] }}"
     provider: selfsigned
   with_items: "{{ sites_info }}"

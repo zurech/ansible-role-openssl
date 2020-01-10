@@ -1,7 +1,8 @@
 ---
 
-organization_name: Ascentio
+organization_name: FakeOrg
 country_name: AR
+expiration_date: +3650d
 private_key_path: "/etc/ssl/private"
 csr_path: "/etc/ssl/csr"
 cert_path: "/etc/ssl/certs"
